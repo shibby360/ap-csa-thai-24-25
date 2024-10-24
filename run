@@ -1,0 +1,3 @@
+currentfile=Main
+javac $currentfile.java
+java $currentfile
