@@ -1,4 +1,5 @@
-public class Arrays {
+
+public class ArraysNotes {
     public static void main(String[] args) {
         // once an array is made, it's size is fixed
         // you can't change the length

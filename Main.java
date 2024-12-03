@@ -1,5 +1,12 @@
 public class Main {
     public static void main(String[] args) {
+        studentClass();
+    }
+    public static void studentClass() {
+        Student shivank = new Student("shivank", 27);
+        System.out.println(shivank);
+    }
+    public static void dogClass() {
         Dog arhtur = new Dog("Arhtur", 5, true);
         Dog george = new Dog("George", 3, false);
         Dog[] kennel = new Dog[3];
