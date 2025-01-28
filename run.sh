@@ -1,4 +1,4 @@
-currentfile=ArrayListNotes
+currentfile=_2dArrays
 if [ "$1" == "-c" ]; then
     javac $currentfile.java
     java $currentfile
