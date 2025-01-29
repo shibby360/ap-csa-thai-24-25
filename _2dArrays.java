@@ -1,3 +1,4 @@
+// concentration game
 import java.util.Scanner;
 public class _2dArrays {
     public static int sz = 4;
@@ -24,10 +25,12 @@ public class _2dArrays {
             {"-","-","-","-"}
         };
         int[][] matched = new int[sz][sz];
+        long time = System.currentTimeMillis();
         while(!allMatched(matched)) {
             System.out.print("\033[H\033[2J");
             System.out.flush();
             showBoard(userboard);
+            printTime(time);
             System.out.print("row:");
             int row1 = input.nextInt();
             System.out.print("column:");
@@ -47,7 +50,7 @@ public class _2dArrays {
             System.out.print("second column:");
             int col2 = input.nextInt();
             input.nextLine();
-            while(row1==row2 && col1==col2 && matched[row2][col2]==1) {
+            while((row1==row2 && col1==col2) || matched[row2][col2]==1) {
                 System.out.println("pick a different square");
                 System.out.print("second row:");
                 row2 = input.nextInt();
@@ -56,6 +59,7 @@ public class _2dArrays {
                 input.nextLine();
             }
             showBoard(userboard,board,new int[]{row1,row2},new int[]{col1,col2});
+            printTime(time);
             if(board[row1][col1]==board[row2][col2]) {
                 System.out.println("you got it!");
                 matched[row1][col1] = 1;
@@ -68,6 +72,8 @@ public class _2dArrays {
             System.out.println("enter to continue");
             input.nextLine();
         }
+        printTime(time);
+        System.out.println("hooray you're done");
     }
     public static void showBoard(String[][] board) {
         for(String[] x : board) {
@@ -128,5 +134,9 @@ public class _2dArrays {
             array[i] = array[j];
             array[j] = temp;
         }
+    }
+    public static void printTime(long time) {
+        double newtime = (System.currentTimeMillis() - time)/1000;
+        System.out.println("Time: " + newtime);
     }
 }
