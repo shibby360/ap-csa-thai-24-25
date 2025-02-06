@@ -23,7 +23,7 @@ public class _2dArrays {
             h = input.nextInt();
             input.nextLine();
         }
-        String[][] board = new String[w][h];
+        String[][] board = new String[h][w];
         if((w*h) % 8 == 0 && w*h > 4) {
             int ct = (w*h)/4;
             placeTiles(board, red, ct, false, 0);
@@ -38,15 +38,13 @@ public class _2dArrays {
             }
             placeTiles(board, cols[(int)(Math.random() * 4)], 2, true, ((ct-1)%4)+1);
         }
-        String[][] userboard = new String[w][h];
-        for(int r = 0; r<w; r++) {
-            for(int c = 0; c<h; c++) {
+        String[][] userboard = new String[h][w];
+        for(int r = 0; r<h; r++) {
+            for(int c = 0; c<w; c++) {
                 userboard[r][c] = "☐ ";
             }
         }
-        // showBoard(board);
-        // input.nextLine();
-        int[][] matched = new int[w][h];
+        int[][] matched = new int[h][w];
         long time = System.currentTimeMillis();
         while(!allMatched(matched)) {
             System.out.print("\033[H\033[2J"); // ansi code for clear screen & return cursor to home
@@ -59,32 +57,32 @@ public class _2dArrays {
             System.out.print("column:");
             int col1 = input.nextInt()-1;
             input.nextLine(); // consume trailing newline?(idk what that means)
-            while(row1<0 || row1>w-1 || col1<0 || col1>h-1 || matched[row1][col1]==1) {
-                System.out.println("pick a different square");
+            while(row1<0 || row1>h-1 || col1<0 || col1>w-1 || matched[row1][col1]==1) {
+                System.out.print("\033[A\033[K\033[A\033[K(pick a different square) "); //ESC[K to clear current line
                 System.out.print("row:");
                 row1 = input.nextInt()-1;
                 System.out.print("column:");
                 col1 = input.nextInt()-1;
                 input.nextLine();
             }
-            System.out.print("\033[" + ((2*h)-1) + "A");
+            System.out.print("\033[" + ((2*h)+2) + "A");
             animate(userboard, board, new int[0], new int[0], row1, col1, "row:"+row1+"\ncolumn:"+col1);
             try {
                 Thread.sleep(1000);
             } catch(InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.print("\033[" + (2*h) + "A");
+            System.out.print("\033[" + ((2*h)+2) + "A");
             showBoard(userboard,board,new int[]{row1},new int[]{col1});
             System.out.println("row:"+row1);
             System.out.println("column:"+col1);
-            // finished animation
+            // finished first tile flip animation
             System.out.print("second row:");
             int row2 = input.nextInt()-1;
             System.out.print("second column:");
             int col2 = input.nextInt()-1;
             input.nextLine();
-            while((row1==row2 && col1==col2) || row2<0 || row2>w-1 || col2<0 || col2>h-1 || matched[row2][col2]==1) {
+            while((row1==row2 && col1==col2) || row2<0 || row2>h-1 || col2<0 || col2>w-1 || matched[row2][col2]==1) {
                 System.out.println("pick a different square");
                 System.out.print("second row:");
                 row2 = input.nextInt()-1;
