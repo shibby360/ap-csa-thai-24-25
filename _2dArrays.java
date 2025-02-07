@@ -65,34 +65,28 @@ public class _2dArrays {
                 col1 = input.nextInt()-1;
                 input.nextLine();
             }
-            System.out.print("\033[" + ((2*h)+2) + "A");
-            animate(userboard, board, new int[0], new int[0], row1, col1, "row:"+row1+"\ncolumn:"+col1);
-            try {
-                Thread.sleep(1000);
-            } catch(InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.print("\033[" + ((2*h)+2) + "A");
+            fullAnimate(userboard, board, new int[0], new int[0], row1, col1, trailingString(row1, col1), (2*h)+2);
             showBoard(userboard,board,new int[]{row1},new int[]{col1});
-            System.out.println("row:"+row1);
-            System.out.println("column:"+col1);
-            // finished first tile flip animation
+            System.out.println(trailingString(row1, col1));
+            // first tile flip animation is done
             System.out.print("second row:");
             int row2 = input.nextInt()-1;
             System.out.print("second column:");
             int col2 = input.nextInt()-1;
             input.nextLine();
             while((row1==row2 && col1==col2) || row2<0 || row2>h-1 || col2<0 || col2>w-1 || matched[row2][col2]==1) {
-                System.out.println("pick a different square");
+                System.out.print("\033[A\033[K\033[A\033[K(pick a different square) "); //ESC[K to clear current line
                 System.out.print("second row:");
                 row2 = input.nextInt()-1;
                 System.out.print("second column:");
                 col2 = input.nextInt()-1;
                 input.nextLine();
             }
-            printTime(time);
+            fullAnimate(userboard, board, new int[]{row1}, new int[]{col1}, row2, col2, trailingString(row1, col1, row2, col2), (2*h)+4);
             showBoard(userboard,board,new int[]{row1,row2},new int[]{col1,col2});
-            if(board[row1][col1]==board[row2][col2]) {
+            System.out.print("\033[4B");
+            // finished second tile animation, now cursor is in right place
+            if(board[row1][col1].equals(board[row2][col2])) {
                 System.out.println("you got it!");
                 matched[row1][col1] = 1;
                 matched[row2][col2] = 1;
@@ -102,6 +96,7 @@ public class _2dArrays {
                 System.out.println("not quite, try again");
             }
             System.out.println("enter to continue");
+            printTime(time);
             input.nextLine();
         }
         printTime(time);
@@ -127,11 +122,12 @@ public class _2dArrays {
             System.out.println("\n");
         }
     }
-    public static void animate(String[][] userboard, String[][] board, int[] r_s, int[] c_s, int animR, int animC, String trailing) {
+    public static void animate(String[][] userboard, String[][] board, int[] r_s, int[] c_s, int animR, int animC, int animSeq, String trailing) {
+        String[] seq = {"▯","|","▯"};
         for(int i=0;i<board.length;i++) {
             for(int j=0;j<board[0].length;j++) {
                 if(animR==i&&animC==j) {
-                    System.out.print("| ");
+                    System.out.print(seq[animSeq]+" ");
                 }
                 else if(matchesRowCol(i, j, r_s, c_s)) {
                     System.out.print(board[i][j]+" ");
@@ -142,6 +138,27 @@ public class _2dArrays {
             System.out.println("\n");
         }
         System.out.println(trailing);
+    }
+    public static void fullAnimate(String[][] userboard, String[][] board, int[] r_s, int[] c_s, int animR, int animC, String trailing, int colsUp) {
+        System.out.print("\033[" + colsUp + "A");
+        for(int i = 0; i < 2; i++) {
+            animate(userboard, board, r_s, c_s, animR, animC, i, trailing);
+            pause(0.5);
+            System.out.print("\033[" + colsUp + "A");
+        }
+    }
+    public static void pause(double sec) {
+        try {
+            Thread.sleep((long)(sec*1000.0));
+        } catch(InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public static String trailingString(int r1, int c1) {
+        return "row:"+(r1+1)+"\ncolumn:"+(c1+1);
+    }
+    public static String trailingString(int r1, int c1, int r2, int c2) {
+        return "row:"+(r1+1)+"\ncolumn:"+(c1+1)+"\nsecond row:"+(r2+1)+"\nsecond column:"+(c2+1);
     }
     public static boolean matchesRowCol(int i, int j, int[] r_s, int[] c_s) {
         for (int k = 0; k < r_s.length; k++) {
