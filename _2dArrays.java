@@ -15,6 +15,8 @@ public class _2dArrays {
         System.out.print("height:");
         int h = input.nextInt();
         input.nextLine();
+        System.out.println("[enter/return] to continue");
+        String d = input.nextLine();
         while(((w%2==1) && (h%2==1)) || (w*h<4)) {
             System.out.println("pick different dimensions");
             System.out.print("width:");
@@ -24,19 +26,33 @@ public class _2dArrays {
             input.nextLine();
         }
         String[][] board = new String[h][w];
-        if((w*h) % 8 == 0 && w*h > 4) {
-            int ct = (w*h)/4;
-            placeTiles(board, red, ct, false, 0);
-            placeTiles(board, green, ct, false, 0);
-            placeTiles(board, blue, ct, false, 0);
-            placeTiles(board, yellow, ct, false, 0);
-        } else {
-            int ct = ((w*h)-2)/2;
-            String[] cols = {red,green,blue,yellow};
-            for(int i = 0; i < ct; i++) {
-                placeTiles(board, cols[i%4], 2, true, i/4);
+        if(!(d.equals("debug"))) {
+            if((w*h) % 8 == 0 && w*h > 4) {
+                int ct = (w*h)/4;
+                placeTiles(board, red, ct, false, 0);
+                placeTiles(board, green, ct, false, 0);
+                placeTiles(board, blue, ct, false, 0);
+                placeTiles(board, yellow, ct, false, 0);
+            } else {
+                int ct = ((w*h)-2)/2;
+                String[] cols = {red,green,blue,yellow};
+                for(int i = 0; i < ct; i++) {
+                    placeTiles(board, cols[i%4], 2, true, i/4);
+                }
+                placeTiles(board, cols[(int)(Math.random() * 4)], 2, true, ((ct-1)%4)+1);
             }
-            placeTiles(board, cols[(int)(Math.random() * 4)], 2, true, ((ct-1)%4)+1);
+        } else {
+            String[] cols = {red,green,blue,yellow};
+            int maxCt = (w*h)/8;
+            int currCt = 0;
+            int currCInd = 0;
+            for(int r = 0; r < board.length; r++) {
+                for(int c = 0; c < board[r].length; c++) {
+                    board[r][c] = cols[currCInd] + currCt/2 + reset;
+                    currCt++;
+                }
+                if(currCt==maxCt) {currCt=0;currCInd++;}
+            }
         }
         String[][] userboard = new String[h][w];
         for(int r = 0; r<h; r++) {
@@ -196,5 +212,16 @@ public class _2dArrays {
                 board[r][c] = tile+(i/2)+reset;
             }
         }
+    }
+    public synchronized void playBing() { /* idrk what "synchronized" does */
+        try {
+            Clip clip = AudioSystem.getClip();
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+              Main.class.getResourceAsStream("/path/to/sounds/" + url));
+            clip.open(inputStream);
+            clip.start(); 
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
     }
 }
