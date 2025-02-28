@@ -213,15 +213,15 @@ public class _2dArrays {
             }
         }
     }
-    public synchronized void playBing() { /* idrk what "synchronized" does */
-        try {
-            Clip clip = AudioSystem.getClip();
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-              Main.class.getResourceAsStream("/path/to/sounds/" + url));
-            clip.open(inputStream);
-            clip.start(); 
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
-    }
+    // public synchronized void playBing() { /* idrk what "synchronized" does */
+    //     try {
+    //         Clip clip = AudioSystem.getClip();
+    //         AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+    //           Main.class.getResourceAsStream("/path/to/sounds/" + url));
+    //         clip.open(inputStream);
+    //         clip.start(); 
+    //       } catch (Exception e) {
+    //         e.printStackTrace();
+    //       }
+    // }
 }
