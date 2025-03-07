@@ -25,4 +25,4 @@ if [ $backup == "yes" ]; then
 fi
 # -c will compile the .class
 # absence of -c doesn't compile .class and runs file directly
-# -d runs w/ CURRDIR
+# -d runs in CURRDIR
