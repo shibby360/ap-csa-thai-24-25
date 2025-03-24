@@ -3,13 +3,19 @@ public class Container {
     private String name;
     private int capacityLevel;
     protected ArrayList<String> things = new ArrayList<String>();
+    private static int made; // static variables are shred among all instances of the class
+    public static int getContsMade() { // can be called w/o creating object of a class(like Math)
+        return made;
+    }
     public Container() {
         name = "unknown";
         capacityLevel = 0;
+        made ++;
     }
     public Container(String name, int capacityLevel) {
         this.name = name;
         this.capacityLevel =  capacityLevel;
+        made ++;
     }
     public String getName() {
         return this.name;

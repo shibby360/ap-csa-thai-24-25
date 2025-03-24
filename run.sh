@@ -1,16 +1,21 @@
 compile="no"
 direct=$CURRDIR
-backup="no"
+goup="no"
 currentfile=Main
 OPTIND=1
-while getopts ":cd" opt; do
+while getopts ":cde" opt; do
     case ${opt} in
     c)
         compile="yes"
         ;;
     d)
         cd $direct
-        backup="yes"
+        goup="yes"
+        ;;
+    e)
+        compile="yes"
+        cd $direct
+        goup="yes"
         ;;
     esac
 done
@@ -20,7 +25,7 @@ if [ $compile == "yes" ]; then
 else 
     java $currentfile.java
 fi
-if [ $backup == "yes" ]; then
+if [ $goup == "yes" ]; then
     cd ..
 fi
 # -c will compile the .class

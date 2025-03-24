@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
+        System.out.println(Container.getContsMade());
         Container c = new Container("pizza pizza pie", 0);
         c.insert("pepperrrOni", 1);
         c.insert("green peppers", 10);
@@ -16,7 +17,11 @@ public class Main {
             x.insert("serious", 50);
             x.dump(); // .dump isn't a method for Container
             // we can fix by adding a method for dump in container
+            if(x instanceof Cup) { // check if x was made w/ Cup constructor
+                System.out.println( (Cup)(x) ); // cast currContainer to cup
+            }
             System.out.println(x);
         }
+        System.out.println(Container.getContsMade());
     }
 }
